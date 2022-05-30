@@ -14,13 +14,19 @@
 service: note
 plugins:
   - serverless-offline
+  - serverless-dynamodb-local
+  - serverless-plugin-typescript
+custom:
+  serverlessPluginTypescript:
+    tsConfigFileLocation: './tsconfig.json'
+    
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
-frameworkVersion: '3'
+# frameworkVersion: '3'
 
 provider:
   name: aws
@@ -62,11 +68,15 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/graphql.graphqlHandler2
+    # handler: sr.hello
     events:
-      - httpApi:
-          path: /hello
+      - http:
+          path: /graphql
           method: get
+      - http:
+          path: /graphql
+          method: post
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
